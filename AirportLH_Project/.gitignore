@@ -1,1 +1,4 @@
 /test-classes/
+.DS_Store
+/bin/
+.gitignore
