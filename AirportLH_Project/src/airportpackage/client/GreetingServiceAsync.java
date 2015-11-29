@@ -148,6 +148,19 @@ public interface GreetingServiceAsync {
 	 */
 	void deleteCrewById(int crewId, AsyncCallback<String> asyncCallback);
 
+	/**
+	 * Insert crew by crewId into table CREW, database AIRPORT
+	 * @param crew - object Crew
+	 * @param asyncCallback - handler to handle RPC callback in which server returns the Message back to client
+	 */
+	void insertCrew(Crew crew, AsyncCallback<String> asyncCallback);
+
+	/**
+	 * Get template crew from table CREW, database AIRPORT
+	 * @param asyncCallback - handler to handle RPC callback in which server returns the Message back to client
+	 */
+	void getCrew(AsyncCallback<String> asyncCallback);
+
 	
 
 }

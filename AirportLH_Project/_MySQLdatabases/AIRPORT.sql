@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 25, 2015 at 05:53 PM
+-- Generation Time: Nov 29, 2015 at 10:04 PM
 -- Server version: 5.6.27
 -- PHP Version: 5.4.30
 
@@ -14340,7 +14340,7 @@ INSERT INTO `AIRPORTS` (`AIRPORT_ID`, `NAME`, `CITY`, `COUNTRY`, `IATA`, `ICAO`,
 
 CREATE TABLE IF NOT EXISTS `CREWS` (
   `CREW_ID` int(5) NOT NULL COMMENT 'ID летного состава',
-  `PIC_ID` int(5) NOT NULL DEFAULT '999' COMMENT 'ID первого пилота',
+  `PIC_ID` int(5) NOT NULL DEFAULT '0' COMMENT 'ID первого пилота',
   `CP_ID` int(5) NOT NULL DEFAULT '0' COMMENT 'ID второго пилота',
   `SO_ID` int(5) NOT NULL DEFAULT '0' COMMENT 'ID третьего пилота',
   `PURSER1_ID` int(5) NOT NULL DEFAULT '0' COMMENT 'ID первого главного стюарда',
@@ -14355,21 +14355,24 @@ CREATE TABLE IF NOT EXISTS `CREWS` (
   `FLIGHT_AT8_ID` int(5) NOT NULL DEFAULT '0' COMMENT 'ID восьмого стюарда (стюардессы)',
   `FLIGHT_AT9_ID` int(5) NOT NULL DEFAULT '0' COMMENT 'ID девятого стюарда (стюардессы)',
   `FLIGHT_AT10_ID` int(5) NOT NULL DEFAULT '0' COMMENT 'ID десятого стюарда (стюардессы)'
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1005 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `CREWS`
 --
 
 INSERT INTO `CREWS` (`CREW_ID`, `PIC_ID`, `CP_ID`, `SO_ID`, `PURSER1_ID`, `PURSER2_ID`, `FLIGHT_AT1_ID`, `FLIGHT_AT2_ID`, `FLIGHT_AT3_ID`, `FLIGHT_AT4_ID`, `FLIGHT_AT5_ID`, `FLIGHT_AT6_ID`, `FLIGHT_AT7_ID`, `FLIGHT_AT8_ID`, `FLIGHT_AT9_ID`, `FLIGHT_AT10_ID`) VALUES
-(1, 2, 3, 9, 11, 27, 12, 13, 14, 15, 16, 28, 29, 30, 31, 32),
-(2, 17, 19, 25, 43, 59, 28, 29, 30, 31, 32, 44, 45, 46, 47, 48),
+(0, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014),
+(1, 1, 3, 9, 11, 27, 16, 15, 14, 13, 12, 28, 29, 30, 31, 32),
+(2, 17, 19, 25, 43, 59, 220, 221, 222, 223, 224, 44, 45, 46, 47, 48),
 (3, 33, 35, 41, 75, 91, 60, 61, 62, 63, 64, 76, 77, 78, 79, 80),
 (4, 49, 53, 57, 107, 123, 92, 93, 94, 95, 96, 108, 109, 110, 111, 112),
 (5, 65, 67, 73, 139, 155, 124, 125, 126, 127, 128, 140, 141, 142, 143, 144),
 (6, 81, 83, 89, 171, 187, 156, 157, 158, 159, 160, 172, 173, 174, 175, 176),
 (7, 97, 99, 105, 203, 219, 188, 189, 190, 191, 192, 204, 205, 206, 207, 208),
-(11, 97, 99, 105, 203, 219, 188, 189, 190, 191, 192, 204, 205, 206, 207, 208);
+(8, 97, 99, 105, 203, 219, 188, 189, 190, 191, 192, 204, 205, 206, 207, 208),
+(10, 2, 52, 26, 292, 332, 254, 255, 261, 256, 263, 259, 260, 239, 16, 237),
+(1000, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014);
 
 -- --------------------------------------------------------
 
@@ -18946,18 +18949,18 @@ CREATE TABLE IF NOT EXISTS `STAFF` (
   `CITY` varchar(39) NOT NULL COMMENT 'Город',
   `POSITION` varchar(20) NOT NULL COMMENT 'Должность',
   `CREW_ID_REF` int(5) NOT NULL COMMENT 'Flag, 1 -  in crew, 0 - not in crew'
-) ENGINE=InnoDB AUTO_INCREMENT=542 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1015 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `STAFF`
 --
 
 INSERT INTO `STAFF` (`STAFF_ID`, `FIRST_NAME`, `LAST_NAME`, `GENDER`, `COUNTRY`, `CITY`, `POSITION`, `CREW_ID_REF`) VALUES
-(1, 'Achim', 'Abel', 'Herr', 'GERMANY', 'Frankfurt', 'Pilot-In-Command', 0),
-(2, 'Adelbert', 'Abert', 'Herr', 'GERMANY', 'Frankfurt', 'Pilot-In-Command', 1),
+(1, 'Achim', 'Abel', 'Herr', 'GERMANY', 'Frankfurt', 'Pilot-In-Command', 1),
+(2, 'Adelbert', 'Abert', 'Herr', 'GERMANY', 'Frankfurt', 'Pilot-In-Command', 0),
 (3, 'Adolf', 'Abich', 'Herr', 'GERMANY', 'Frankfurt', 'Co-Pilot', 1),
 (4, 'Alban', 'Abicht', 'Herr', 'GERMANY', 'Frankfurt', 'Co-Pilot', 0),
-(5, 'Albrecht', 'Adler', 'Herr', 'GERMANY', 'Frankfurt', 'Co-Pilot', 0),
+(5, 'Albrecht', 'Adler', 'Herr', 'GERMANY', 'Frankfurt', 'Co-Pilot', 1),
 (6, 'Alfons', 'Albrecht', 'Herr', 'GERMANY', 'Frankfurt', 'Co-Pilot', 0),
 (7, 'Alois', 'Altmann', 'Herr', 'GERMANY', 'Frankfurt', 'Co-Pilot', 0),
 (8, 'Aloysius', 'Anger', 'Herr', 'GERMANY', 'Frankfurt', 'Co-Pilot', 0),
@@ -18968,9 +18971,9 @@ INSERT INTO `STAFF` (`STAFF_ID`, `FIRST_NAME`, `LAST_NAME`, `GENDER`, `COUNTRY`,
 (13, 'Armin', 'Auerbach', 'Herr', 'GERMANY', 'Frankfurt', 'Flight Attendant', 1),
 (14, 'Arndt', 'Baade', 'Herr', 'GERMANY', 'Frankfurt', 'Flight Attendant', 1),
 (15, 'Arne', 'Bach', 'Herr', 'GERMANY', 'Frankfurt', 'Flight Attendant', 1),
-(16, 'Arnold', 'Bachmann', 'Herr', 'GERMANY', 'Frankfurt', 'Flight Attendant', 1),
+(16, 'Arnold', 'Bachmann', 'Herr', 'GERMANY', 'Frankfurt', 'Flight Attendant', 0),
 (17, 'August', 'Bartels', 'Herr', 'GERMANY', 'Frankfurt', 'Pilot-In-Command', 1),
-(18, 'Aurel', 'Baum', 'Herr', 'GERMANY', 'Frankfurt', 'Pilot-In-Command', 0),
+(18, 'Aurel', 'Baum', 'Herr', 'GERMANY', 'Frankfurt', 'Pilot-In-Command', 1),
 (19, 'Baldur', 'Baumann', 'Herr', 'GERMANY', 'Frankfurt', 'Co-Pilot', 1),
 (20, 'Baptist', 'Baumbach', 'Herr', 'GERMANY', 'Frankfurt', 'Co-Pilot', 0),
 (21, 'Bartholomäus', 'Baumgarten', 'Herr', 'GERMANY', 'Frankfurt', 'Co-Pilot', 0),
@@ -19003,7 +19006,7 @@ INSERT INTO `STAFF` (`STAFF_ID`, `FIRST_NAME`, `LAST_NAME`, `GENDER`, `COUNTRY`,
 (48, 'Dietrich', 'Brandes', 'Herr', 'GERMANY', 'Frankfurt', 'Flight Attendant', 1),
 (49, 'Dirk', 'Brandt', 'Herr', 'GERMANY', 'Frankfurt', 'Pilot-In-Command', 1),
 (50, 'Ebbe', 'Braunfels', 'Herr', 'GERMANY', 'Frankfurt', 'Pilot-In-Command', 0),
-(51, 'Eberhard', 'Bremer', 'Herr', 'GERMANY', 'Frankfurt', 'Co-Pilot', 0),
+(51, 'Eberhard', 'Bremer', 'Herr', 'GERMANY', 'Frankfurt', 'Co-Pilot', 1),
 (52, 'Eckart', 'Brenner', 'Herr', 'GERMANY', 'Frankfurt', 'Co-Pilot', 0),
 (53, 'Eckbert', 'Brockhaus', 'Herr', 'GERMANY', 'Frankfurt', 'Co-Pilot', 1),
 (54, 'Eckehard', 'Brunner', 'Herr', 'GERMANY', 'Frankfurt', 'Co-Pilot', 0),
@@ -19051,7 +19054,7 @@ INSERT INTO `STAFF` (`STAFF_ID`, `FIRST_NAME`, `LAST_NAME`, `GENDER`, `COUNTRY`,
 (96, 'Gero', 'Feigl', 'Herr', 'GERMANY', 'Frankfurt', 'Flight Attendant', 1),
 (97, 'Gerold', 'Felder', 'Herr', 'GERMANY', 'Frankfurt', 'Pilot-In-Command', 1),
 (98, 'Gert', 'Feldkamp', 'Herr', 'GERMANY', 'Frankfurt', 'Pilot-In-Command', 0),
-(99, 'Gerulf', 'Fellendorf', 'Herr', 'GERMANY', 'Frankfurt', 'Co-Pilot', 1),
+(99, 'Gerulf', 'Fellendorf', 'Herr', 'GERMANY', 'Frankfurt', 'Co-Pilot', 0),
 (100, 'Gervas', 'Fetting', 'Herr', 'GERMANY', 'Frankfurt', 'Co-Pilot', 0),
 (101, 'Gisbert', 'Feuchtwanger', 'Herr', 'GERMANY', 'Frankfurt', 'Co-Pilot', 0),
 (102, 'Gottfried', 'Feuerbach', 'Herr', 'GERMANY', 'Frankfurt', 'Co-Pilot', 0),
@@ -19172,11 +19175,11 @@ INSERT INTO `STAFF` (`STAFF_ID`, `FIRST_NAME`, `LAST_NAME`, `GENDER`, `COUNTRY`,
 (217, 'Sepp', 'Kamphausen', 'Herr', 'GERMANY', 'Munchen', 'Second Officer', 0),
 (218, 'Seppel', 'Kant', 'Herr', 'GERMANY', 'Munchen', 'Second Officer', 0),
 (219, 'Siegbert', 'Kantor', 'Herr', 'GERMANY', 'Munchen', 'Purser', 1),
-(220, 'Siegfried', 'Karus', 'Herr', 'GERMANY', 'Berlin', 'Flight Attendant', 0),
-(221, 'Sieghard', 'Kaulbach', 'Herr', 'GERMANY', 'Berlin', 'Flight Attendant', 0),
-(222, 'Siegmund', 'Kaufmann', 'Herr', 'GERMANY', 'Berlin', 'Flight Attendant', 0),
-(223, 'Siegward', 'Kauer', 'Herr', 'GERMANY', 'Berlin', 'Flight Attendant', 0),
-(224, 'Sigi', 'Katz', 'Herr', 'GERMANY', 'Berlin', 'Flight Attendant', 0),
+(220, 'Siegfried', 'Karus', 'Herr', 'GERMANY', 'Berlin', 'Flight Attendant', 1),
+(221, 'Sieghard', 'Kaulbach', 'Herr', 'GERMANY', 'Berlin', 'Flight Attendant', 1),
+(222, 'Siegmund', 'Kaufmann', 'Herr', 'GERMANY', 'Berlin', 'Flight Attendant', 1),
+(223, 'Siegward', 'Kauer', 'Herr', 'GERMANY', 'Berlin', 'Flight Attendant', 1),
+(224, 'Sigi', 'Katz', 'Herr', 'GERMANY', 'Berlin', 'Flight Attendant', 1),
 (225, 'Sigismund', 'Katzmann', 'Herr', 'GERMANY', 'Berlin', 'Pilot-In-Command', 0),
 (226, 'Sigiswald', 'Keler', 'Herr', 'GERMANY', 'Berlin', 'Pilot-In-Command', 0),
 (227, 'Stephan', 'Keller', 'Herr', 'GERMANY', 'Berlin', 'Co-Pilot', 0),
@@ -19188,7 +19191,7 @@ INSERT INTO `STAFF` (`STAFF_ID`, `FIRST_NAME`, `LAST_NAME`, `GENDER`, `COUNTRY`,
 (233, 'Udo', 'Kinkel', 'Herr', 'GERMANY', 'Berlin', 'Second Officer', 0),
 (234, 'Urs', 'Kirchner', 'Herr', 'GERMANY', 'Berlin', 'Second Officer', 0),
 (235, 'Utz', 'Kirschner', 'Herr', 'GERMANY', 'Berlin', 'Purser', 0),
-(236, 'Uwe', 'Kistler', 'Herr', 'GERMANY', 'Berlin', 'Flight Attendant', 0),
+(236, 'Uwe', 'Kistler', 'Herr', 'GERMANY', 'Berlin', 'Flight Attendant', 1),
 (237, 'Veit', 'Kittel', 'Herr', 'GERMANY', 'Berlin', 'Flight Attendant', 0),
 (238, 'Vester', 'Klassen', 'Herr', 'GERMANY', 'Berlin', 'Flight Attendant', 0),
 (239, 'Vinzent', 'Klee', 'Herr', 'GERMANY', 'Berlin', 'Flight Attendant', 0),
@@ -19493,7 +19496,21 @@ INSERT INTO `STAFF` (`STAFF_ID`, `FIRST_NAME`, `LAST_NAME`, `GENDER`, `COUNTRY`,
 (538, 'Zenzi', 'Rolf', 'Frau', 'GERMANY', 'Berlin', 'Flight Attendant', 0),
 (539, 'Zilla', 'Rolf', 'Frau', 'GERMANY', 'Berlin', 'Flight Attendant', 0),
 (540, 'Ziska', 'Rolf', 'Frau', 'GERMANY', 'Berlin', 'Flight Attendant', 0),
-(999, 'Nowhereman', 'Nobody', 'Herr', 'GERMANY', 'Frankfurt', 'jobless', 0);
+(1000, '', '', '', '', '', 'Pilot-In-Command', 0),
+(1001, '', '', '', '', '', 'Co-Pilot', 0),
+(1002, '', '', '', '', '', 'Second Officer', 0),
+(1003, '', '', '', '', '', 'Purser', 0),
+(1004, '', '', '', '', '', 'Purser', 0),
+(1005, '', '', '', '', '', 'Flight Attendant', 0),
+(1006, '', '', '', '', '', 'Flight Attendant', 0),
+(1007, '', '', '', '', '', 'Flight Attendant', 0),
+(1008, '', '', '', '', '', 'Flight Attendant', 0),
+(1009, '', '', '', '', '', 'Flight Attendant', 0),
+(1010, '', '', '', '', '', 'Flight Attendant', 0),
+(1011, '', '', '', '', '', 'Flight Attendant', 0),
+(1012, '', '', '', '', '', 'Flight Attendant', 0),
+(1013, '', '', '', '', '', 'Flight Attendant', 0),
+(1014, '', '', '', '', '', 'Flight Attendant', 0);
 
 -- --------------------------------------------------------
 
@@ -19541,8 +19558,8 @@ INSERT INTO `TIMETABLE` (`TIMETABLE_ID`, `FLIGHT_NUMBER`, `AIRLINE`, `ROUTE_ID`,
 (20, 'LH713', 'LH', 483, '9', 4, '2015-11-22', '15:25:00', 'ICN', '2015-11-22', '19:05:00', 'MUC'),
 (21, 'LH716', 'LH', 321, '10', 7, '2015-11-21', '17:55:00', 'DUS', '2015-11-22', '13:05:00', 'HND'),
 (22, 'LH717', 'LH', 466, '10', 7, '2015-11-22', '15:20:00', 'HND', '2015-11-22', '19:15:00', 'DUS'),
-(23, 'LH000', 'LH', 422, '7', 6, '2015-11-22', '20:00:00', 'GIG', '2015-11-23', '10:20:00', 'FRA'),
-(27, 'LH001', 'LH', 422, '7', 6, '2015-11-22', '20:00:00', 'GIG', '2015-11-23', '10:20:00', 'FRA');
+(23, 'LH000', 'LH', 422, '7', 10, '2015-11-22', '20:00:00', 'GIG', '2015-11-23', '10:20:00', 'FRA'),
+(27, 'LH001', 'LH', 422, '7', 10, '2015-11-22', '20:00:00', 'GIG', '2015-11-23', '10:20:00', 'FRA');
 
 -- --------------------------------------------------------
 
@@ -19555,7 +19572,7 @@ CREATE TABLE IF NOT EXISTS `USERS` (
   `LOGIN` varchar(30) NOT NULL COMMENT 'Имя регистрации',
   `PASSWORD` varchar(30) NOT NULL COMMENT 'Пароль',
   `RIGHTS` varchar(3) NOT NULL DEFAULT 'DIS' COMMENT 'Права'
-) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `USERS`
@@ -19563,10 +19580,10 @@ CREATE TABLE IF NOT EXISTS `USERS` (
 
 INSERT INTO `USERS` (`USER_ID`, `LOGIN`, `PASSWORD`, `RIGHTS`) VALUES
 (1, 'админ', 'admin', 'ADM'),
-(2, 'dispatcher', 'dispatcher', 'DIS'),
+(2, 'disp', 'disp', 'DIS'),
 (3, 'admin', 'admin', 'ADM'),
-(4, 'диспетчер', 'dispatcher', 'DIS'),
-(87, '????', '999', 'DIS');
+(4, 'дисп', 'disp', 'DIS'),
+(93, 'Керлингист', 'curling', 'DIS');
 
 --
 -- Indexes for dumped tables
@@ -19638,7 +19655,7 @@ ALTER TABLE `AIRCRAFTS`
 -- AUTO_INCREMENT for table `CREWS`
 --
 ALTER TABLE `CREWS`
-  MODIFY `CREW_ID` int(5) NOT NULL AUTO_INCREMENT COMMENT 'ID летного состава',AUTO_INCREMENT=12;
+  MODIFY `CREW_ID` int(5) NOT NULL AUTO_INCREMENT COMMENT 'ID летного состава',AUTO_INCREMENT=1005;
 --
 -- AUTO_INCREMENT for table `ROUTES`
 --
@@ -19648,7 +19665,7 @@ ALTER TABLE `ROUTES`
 -- AUTO_INCREMENT for table `STAFF`
 --
 ALTER TABLE `STAFF`
-  MODIFY `STAFF_ID` int(5) NOT NULL AUTO_INCREMENT COMMENT 'ID личного состава',AUTO_INCREMENT=542;
+  MODIFY `STAFF_ID` int(5) NOT NULL AUTO_INCREMENT COMMENT 'ID личного состава',AUTO_INCREMENT=1015;
 --
 -- AUTO_INCREMENT for table `TIMETABLE`
 --
@@ -19658,7 +19675,7 @@ ALTER TABLE `TIMETABLE`
 -- AUTO_INCREMENT for table `USERS`
 --
 ALTER TABLE `USERS`
-  MODIFY `USER_ID` int(5) NOT NULL AUTO_INCREMENT COMMENT 'ID пользователя',AUTO_INCREMENT=88;
+  MODIFY `USER_ID` int(5) NOT NULL AUTO_INCREMENT COMMENT 'ID пользователя',AUTO_INCREMENT=94;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -290,4 +290,27 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		return "";
 	}
 
+	/**
+	 * 
+	 */
+	@Override
+	public String insertCrew(Crew crew) {
+
+		CrewDAO crewDAO = new CrewDAO();
+		crewDAO.insertCrew(crew);
+		serverLogger.log(Level.INFO, "GreetingServiceImpl, CrewDAO, method insertCrew(Crew crew)");
+
+		return "";
+	}
+
+	@Override
+	public String getCrew() {
+		
+		CrewDAO crewDAO = new CrewDAO();
+		crewDAO.getCrew();
+		serverLogger.log(Level.INFO, "GreetingServiceImpl, CrewDAO, method getCrew()");
+
+		return "";
+	}
+
 }

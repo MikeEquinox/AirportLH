@@ -20,7 +20,7 @@ import java.io.Serializable;
  *  engines - тип двигателей
  *  seats - места
  */
-public class Aircraft implements Serializable{
+public class Aircraft implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	

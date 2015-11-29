@@ -17,7 +17,7 @@ import java.io.Serializable;
  *  purserId2 - второй стариший стюард(есса)
  *  flightAt1Id - стюард(есса)
  */
-public class Crew implements Serializable{
+public class Crew implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	

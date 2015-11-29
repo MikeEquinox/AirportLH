@@ -18,7 +18,7 @@ import java.io.Serializable;
  *  position - должность
  *  crewIdRef - принадлежность к летной бригаде
  */
-public class Staff implements Serializable{
+public class Staff implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	

@@ -46,7 +46,6 @@ final class ListDataProviderExtension7 extends ListDataProvider<Staff> {
 			public void onFailure(Throwable caught) {
 				clientLogger.log(Level.SEVERE,
 						"greetingService.getStaffByPosition(), AsyncCallback failure. " + caught.getMessage());
-				// Window.alert(caught.getMessage());
 			}
 
 			@Override

@@ -37,7 +37,7 @@ final class ListDataProviderExtension6 extends ListDataProvider<Staff> {
 	@Override
 	protected void onRangeChanged(HasData<Staff> display) {
 
-		clientLogger.log(Level.INFO, "ListDataProvider6: " + forwardCrewId6);
+		clientLogger.log(Level.INFO, "ListDataProvider6, forwardCrewId: " + forwardCrewId6);
 		final int start = display.getVisibleRange().getStart();
 		end = start + display.getVisibleRange().getLength();
 

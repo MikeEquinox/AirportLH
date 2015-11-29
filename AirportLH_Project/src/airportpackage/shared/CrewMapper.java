@@ -64,7 +64,10 @@ public interface CrewMapper {
 		@Result(property = "flightAt9Id", column = "FLIGHT_AT9_ID"),
 		@Result(property = "flightAt10Id", column = "FLIGHT_AT10_ID"),	
 	})
-	@Select("SELECT * FROM CREWS WHERE CREW_ID = #{crewId}")
+	@Select("SELECT  CREW_ID, PIC_ID, CP_ID, SO_ID, PURSER1_ID, PURSER2_ID, FLIGHT_AT1_ID,"
+			+ " FLIGHT_AT2_ID, FLIGHT_AT3_ID, FLIGHT_AT4_ID, FLIGHT_AT5_ID, FLIGHT_AT6_ID,"
+			+ " FLIGHT_AT7_ID, FLIGHT_AT8_ID, FLIGHT_AT9_ID, FLIGHT_AT10_ID FROM CREWS"
+			+ " WHERE CREW_ID = #{crewId}")
 	Crew getCrewById(int crewId);
 	
 	/**
@@ -80,10 +83,10 @@ public interface CrewMapper {
 	 * Insert crew into table CREWS, database AIRPORT
 	 * @param crew - object Crew
 	 */
-	@Insert("INSERT INTO CREWS(PIC_ID, CP_ID, SO_ID, PURSER1_ID, PURSER2_ID,"
+	@Insert("INSERT INTO CREWS(CREW_ID, PIC_ID, CP_ID, SO_ID, PURSER1_ID, PURSER2_ID,"
 			+ " FLIGHT_AT1_ID, FLIGHT_AT2_ID, FLIGHT_AT3_ID, FLIGHT_AT4_ID, FLIGHT_AT5_ID,"
 			+ " FLIGHT_AT6_ID, FLIGHT_AT7_ID, FLIGHT_AT8_ID, FLIGHT_AT9_ID, FLIGHT_AT10_ID)"
-			+ " VALUES(#{picId}, #{cpId}, #{soId}, #{purser1Id}, #{purser2Id},"
+			+ " VALUES(#{crewId}, #{picId}, #{cpId}, #{soId}, #{purser1Id}, #{purser2Id},"
 			+ "#{flightAt1Id}, #{flightAt2Id}, #{flightAt3Id}, #{flightAt4Id},"
 			+ "#{flightAt5Id}, #{flightAt6Id}, #{flightAt7Id}, #{flightAt8Id},"
 			+ "#{flightAt9Id}, #{flightAt10Id})")

@@ -149,6 +149,19 @@ public interface GreetingService extends RemoteService {
 	 */
 	String deleteCrewById(int crewId);
 
+	/**
+	 * Insert crew by crewId into table CREW, database AIRPORT
+	 * @param crew - object Crew
+	 * @return ""
+	 */
+	String insertCrew(Crew crew);
+
+	/**
+	 * Get template crew from table CREW, database AIRPORT
+	 * @return ""
+	 */
+	String getCrew();
+
 
 
 }

@@ -1,5 +1,7 @@
 package airportpackage.shared;
 
+import java.io.Serializable;
+
 /**
  * @author Mikhail Telegin 
  * Класс пользователи системы 
@@ -12,8 +14,10 @@ package airportpackage.shared;
  * password - пароль
  * rights - права
  */
-public class User {
+public class User implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private int userId;
 	private String login;
 	private String password;
