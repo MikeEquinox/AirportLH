@@ -80,7 +80,8 @@ public class CrewDAO {
 	
 	/**
 	 * Delete crew by crewId from table CREWS, database AIRPORT
-	 * @param forwardCrewId - crewId
+	 * @param crewId - crewId
+	 * @return ""
 	 */
 	public String deleteCrewById(int crewId) {
 		SqlSession session = getSqlSessionFactory().openSession();

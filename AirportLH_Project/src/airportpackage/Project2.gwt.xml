@@ -23,7 +23,7 @@
   <set-property name="gwt.logging.enabled" value="TRUE"/>            <!--To disable logging -->
   <set-property name="gwt.logging.developmentModeHandler" value="ENABLED"/> 
   <!--set-property name="gwt.logging.systemHandler" value="DISABLED"/-->
-  <set-property name="gwt.logging.firebugHandler" value="ENABLED"/>
+  <set-property name="gwt.logging.firebugHandler" value="DISABLED"/>
   <set-property name="gwt.logging.consoleHandler" value="ENABLED"/>  <!--To disable a default Handler -->
   <set-property name="gwt.logging.popupHandler" value="DISABLED" />	 <!-- LoggingPopup -->
 

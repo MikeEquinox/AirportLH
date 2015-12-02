@@ -44,7 +44,6 @@ final class ListDataProviderExtension5A extends ListDataProvider<Timetable> {
 			public void onFailure(Throwable caught) {
 				clientLogger.log(Level.SEVERE,
 						"greetingService.getTimetableDetailsAll(), AsyncCallback failure. " + caught.getMessage());
-				// Window.alert(caught.getMessage());
 			}
 
 			@Override

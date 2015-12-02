@@ -57,13 +57,6 @@ import com.google.gwt.view.client.RangeChangeEvent;
 
 /**
  * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class AirportLH implements EntryPoint {
@@ -110,7 +103,9 @@ public class AirportLH implements EntryPoint {
 	private HandlerRegistration regHandler2;
 	// block 7 tab
 	private HandlerRegistration regHandler3;
-
+	// block all tabs excluding 6 and 7 tab
+	public HandlerRegistration regHandler4;
+	
 	// var - crewId to change
 	private int forwardCrewId = 1;
 	// var - staff to change in crew
@@ -122,6 +117,7 @@ public class AirportLH implements EntryPoint {
 	private int forwardStaffIdNew;
 	// index of changed item
 	private int indexPosition;
+	
 	private Column<Timetable, String> deleteButton6;
 	private Column<Timetable, String> columnCrewId1;
 	private Button buttonCreateCrew;
@@ -129,14 +125,14 @@ public class AirportLH implements EntryPoint {
 	private Button buttonRefreshCrew;
 	private TextBox messageTextBox5;
 	private TextBox messageTextBox6;
-
-	public HandlerRegistration regHandler4;
+	private ExtendedPager pagerCellTable7;
 
 	/**
 	 * @param max
 	 *            number of crews
 	 */
 	private static final int CREW_LIMIT = 15;
+
 
 	/**
 	 * Update OR create staff in selected crew FieldUpdaterImplementation
@@ -145,8 +141,10 @@ public class AirportLH implements EntryPoint {
 		@Override
 		public void update(int index, Staff object, String value) {
 
-//			 Window.alert("forwardCrewId: " + forwardCrewId);
+//		provider7.removeDataDisplay(cellTable7);
+			
 			forwardStaffIdNew = object.getStaffId();
+//			Window.alert("forwardCrewId: " + forwardCrewId + "   forwardStaffIdNew: " + forwardStaffIdNew);
 			clientLogger.log(Level.INFO, "Changing staff forwardStaffIdNew " + forwardStaffIdNew);
 
 			if (forwardCrewId > 0 & forwardCrewId <= 7) {
@@ -251,17 +249,22 @@ public class AirportLH implements EntryPoint {
 					}
 				});
 
+//				provider existance		
+//				if (provider6.getDataDisplays() != null  &
+//						 provider6.getDataDisplays().isEmpty() == false) { 
+//						 provider6.removeDataDisplay(cellTable6); 
+//						 } 
+				
+				pagerCellTable7.setPage(0);
+//				 Window.alert("Возврат из седьмой в шестую при правке существующей");
+				provider6 = ListDataProviderExtension6.getInstance(forwardCrewId);
+				provider6.addDataDisplay(cellTable6);
+				
 				tabLayoutPanel.selectTab(6);
 				
-				// clientLogger.log(Level.INFO, "Changing crew " + forwardCrewId
-				// + " on monitor screen");
-				// clientLogger.log(Level.INFO, "Changing crew: " +
-				// forwardCrewId);
-				// regHandler2 = tabLayoutPanel
-				// .addBeforeSelectionHandler(new
+				// regHandler2 = tabLayoutPanel.addBeforeSelectionHandler(new
 				// BeforeSelectionHandlerImplementationBlock6Tab());
-				// regHandler3 = tabLayoutPanel
-				// .addBeforeSelectionHandler(new
+				// regHandler3 = tabLayoutPanel.addBeforeSelectionHandler(new
 				// BeforeSelectionHandlerImplementationBlock7Tab());
 
 			} else {
@@ -288,7 +291,7 @@ public class AirportLH implements EntryPoint {
 							while (true) {
 								s = Window.prompt("Введите номер летной бригады: больше 9, меньше 16", "10");
 								forwardCrewId = Integer.valueOf(s);
-								if (forwardCrewId >= 10 | forwardCrewId <= 15)
+								if (forwardCrewId >= 10 & forwardCrewId <= 15)
 									break;
 							}
 							crew.setCrewId(forwardCrewId);
@@ -308,36 +311,57 @@ public class AirportLH implements EntryPoint {
 								@Override
 								public void onSuccess(String string) {
 
+									/**
+									 * Get new crew greetingService.getCrewById()
+									 */
+									greetingService.getCrewById(forwardCrewId, new AsyncCallback<Crew>() {
+										@Override
+										public void onFailure(Throwable caught) {
+											clientLogger.log(Level.SEVERE,
+													"greetingService.getCrewById(), AsyncCallback failure. " + caught.getMessage());
+
+										}
+
+										@Override
+										public void onSuccess(Crew crew) {
+
+											clientLogger.log(Level.INFO,
+													"greetingService.updateCrew(), update employee in the crew " + forwardCrewId);
+
+											crewFill(crew);
+
+											/**
+											 * Update crew greetingService.updateCrew()
+											 */
+											greetingService.updateCrew(crew, new AsyncCallback<String>() {
+												@Override
+												public void onFailure(Throwable caught) {
+													clientLogger.log(Level.SEVERE,
+															"greetingService.updateCrew(), AsyncCallback failure. "
+																	+ caught.getMessage());
+
+												}
+
+												@Override
+												public void onSuccess(String string) {
+
+													clientLogger.log(Level.INFO,
+															"greetingService.updateCrew(), update employee in the crew "
+																	+ forwardCrewId);
+												}
+											});
+
+										}
+									});
+			
 									tabLayoutPanel.selectTab(6);
 									clientLogger.log(Level.INFO, "greetingService.insertCrew(), new crew"
 											+ forwardCrewId + "inserted in table CREWS");
 								}
-							});
-
-							/**
-							 * Update crew greetingService.updateCrew()
-							 */
-							greetingService.updateCrew(crew, new AsyncCallback<String>() {
-								@Override
-								public void onFailure(Throwable caught) {
-									clientLogger.log(Level.SEVERE,
-											"greetingService.updateCrew(), AsyncCallback failure. "
-													+ caught.getMessage());
-
-								}
-
-								@Override
-								public void onSuccess(String string) {
-
-									clientLogger.log(Level.INFO,
-											"greetingService.updateCrew(), update employee in the crew "
-													+ forwardCrewId);
-								}
-							});
-
+							});							
 						}
 					});
-
+					
 				} else if (forwardCrewId > 7) { // если ID новой бригады создан
 
 					tabLayoutPanel.selectTab(6);
@@ -364,7 +388,6 @@ public class AirportLH implements EntryPoint {
 									"greetingService.updateCrew(), update employee in the crew " + forwardCrewId);
 
 							crewFill(crew);
-							Window.alert("Update crew. forwardStaffIdNew " + forwardStaffIdNew);
 
 							/**
 							 * Update crew greetingService.updateCrew()
@@ -375,7 +398,6 @@ public class AirportLH implements EntryPoint {
 									clientLogger.log(Level.SEVERE,
 											"greetingService.updateCrew(), AsyncCallback failure. "
 													+ caught.getMessage());
-
 								}
 
 								@Override
@@ -389,7 +411,13 @@ public class AirportLH implements EntryPoint {
 
 						}
 					});
-
+					
+					pagerCellTable7.setPage(0);
+//					 Window.alert("Возврат из седьмой в шестую при создании новой");
+					provider6 = ListDataProviderExtension6.getInstance(forwardCrewId);
+					provider6.addDataDisplay(cellTable6);
+					
+					tabLayoutPanel.selectTab(6);
 				}
 
 			}
@@ -403,7 +431,8 @@ public class AirportLH implements EntryPoint {
 		 *            - object Crew
 		 */
 		private Crew crewFill(Crew crew) {
-			Window.alert("" + indexPosition);
+
+//			Window.alert("indexPosition: " + indexPosition);
 			switch (indexPosition) {
 			case 1:
 				crew.setCpId(forwardStaffIdNew);
@@ -486,7 +515,7 @@ public class AirportLH implements EntryPoint {
 				clientLogger.log(Level.INFO,
 						"ClickHandlerImplementationCreateCrew, creation of new crew");
 				forwardCrewId = 0;
-				buttonDeleteCrew.setEnabled(false);
+//				buttonDeleteCrew.setEnabled(false);
 				messageTextBox6.setText("Для обновления таблицы нажмите кнопку [Обновить летную бригаду]");
 
 				provider6.removeDataDisplay(cellTable6);
@@ -500,6 +529,7 @@ public class AirportLH implements EntryPoint {
 
 	/**
 	 * Button Удалить бригаду ClickHandlerImplementation
+	 * greetingService.deleteCrewById
 	 */
 	private final class ClickHandlerImplementationDeleteCrew implements ClickHandler {
 
@@ -558,7 +588,6 @@ public class AirportLH implements EntryPoint {
 						clientLogger.log(Level.SEVERE,
 								"greetingService.deleteTimetableByFlightNumber(), AsyncCallback failure. "
 										+ caught.getMessage());
-						// Window.alert(caught.getMessage());
 					}
 
 					@Override
@@ -599,6 +628,7 @@ public class AirportLH implements EntryPoint {
 			clientLogger.log(Level.INFO, "Changing staff FirstName " + forwardStaffFirstName);
 			clientLogger.log(Level.INFO, "Changing staff LastName " + forwardStaffLastName);
 
+			provider7 .removeDataDisplay(cellTable7);
 			provider7 = ListDataProviderExtension7.getInstance(forwardStaffPosition);
 			provider7.addDataDisplay(cellTable7);
 
@@ -618,8 +648,8 @@ public class AirportLH implements EntryPoint {
 		public void onClick(ClickEvent event) {
 
 			clientLogger.log(Level.INFO, "Button Все рейсы has been clicked");
-
-			provider5.removeDataDisplay(cellTable5);
+ 
+			provider5A.removeDataDisplay(cellTable5);
 			provider5A = ListDataProviderExtension5A.getInstance();
 			provider5A.addDataDisplay(cellTable5);
 		}
@@ -639,7 +669,7 @@ public class AirportLH implements EntryPoint {
 
 			clientLogger.log(Level.INFO, "Button Все назначенные рейсы has been clicked");
 
-			provider5A.removeDataDisplay(cellTable5);
+//			provider5A.removeDataDisplay(cellTable5);
 			provider5 = ListDataProviderExtension5.getInstance();
 			provider5.addDataDisplay(cellTable5);
 		}
@@ -654,7 +684,7 @@ public class AirportLH implements EntryPoint {
 
 			final Integer valueI = Integer.valueOf(value);
 
-			if (valueI > 0 & valueI < CREW_LIMIT) {
+			if (valueI > 0 & valueI <= CREW_LIMIT) {
 				clientLogger.log(Level.INFO, "Changing crew number of this flight: " + object.getFlightNumber());
 				clientLogger.log(Level.INFO, "Current crew number of this flight: " + object.getCrewId());
 				object.setCrewId(valueI);
@@ -717,19 +747,24 @@ public class AirportLH implements EntryPoint {
 		@Override
 		public void update(int index, Timetable object, String value) {
 
-			tabLayoutPanel.selectTab(6);
-
 			regHandler2.removeHandler();
 			forwardCrewId = object.getCrewId();
 
 			clientLogger.log(Level.INFO, "Changing crew " + forwardCrewId + " on monitor screen");
 			clientLogger.log(Level.INFO, "Changing crew: " + forwardCrewId);
 
+//			provider6.removeDataDisplay(cellTable6);
 			provider6 = ListDataProviderExtension6.getInstance(forwardCrewId);
 			provider6.addDataDisplay(cellTable6);
 
+			tabLayoutPanel.selectTab(6);
 		}
 
+		
+		
+		
+		
+		
 	}
 
 	/**
@@ -860,7 +895,6 @@ public class AirportLH implements EntryPoint {
 				public void onFailure(Throwable caught) {
 					clientLogger.log(Level.SEVERE,
 							"greetingService.registration(), AsyncCallback failure. " + caught.getMessage());
-					Window.alert("Result not ok");
 				}
 			});
 
@@ -949,7 +983,7 @@ public class AirportLH implements EntryPoint {
 		GWT.UncaughtExceptionHandler uncaughtExceptionHandler = new GWT.UncaughtExceptionHandler() {
 			public void onUncaughtException(Throwable e) {
 				clientLogger.log(Level.SEVERE, "My Global Exception handler: " + e.getMessage());
-				Window.alert("My Global Exception handler caught an exception!" + e.getMessage());
+//				Window.alert("My Global Exception handler caught an exception!" + e.getMessage());
 			}
 		};
 		// handle the unexpected after onModuleLoad()
@@ -957,8 +991,9 @@ public class AirportLH implements EntryPoint {
 		// use try/catch to handle the reset
 		try {
 			onModuleLoad2();
+			
 		} catch (RuntimeException ex) {
-			// use our handler rather than duplicate code
+			
 			uncaughtExceptionHandler.onUncaughtException(ex);
 		}
 	}
@@ -1077,14 +1112,10 @@ public class AirportLH implements EntryPoint {
 		};
 		cellTable1.addColumn(columnPosition, "Должность");
 
-		// provider1 = new ListDataProviderExtension1();
-		provider1 = ListDataProviderExtension1.getInstance();
-
 		// add provider to cellTable
+		provider1 = ListDataProviderExtension1.getInstance();
 		provider1.addDataDisplay(cellTable1);
 
-		// SimplePager pagerCellTable1 = new SimplePager(TextLocation.CENTER,
-		// true, true);
 		ExtendedPager pagerCellTable1 = new ExtendedPager();
 		pagerCellTable1.setPageSize(20);
 		pagerCellTable1.setDisplay(cellTable1);
@@ -1127,14 +1158,10 @@ public class AirportLH implements EntryPoint {
 		};
 		cellTable2.addColumn(columnPosition2, "Должность");
 
-		// provider2 = new ListDataProviderExtension2();
-		provider2 = ListDataProviderExtension2.getInstance();
-
 		// add provider to cellTable
+		provider2 = ListDataProviderExtension2.getInstance();
 		provider2.addDataDisplay(cellTable2);
 
-		// SimplePager pagerCellTable2 = new SimplePager(TextLocation.CENTER,
-		// false, false);
 		ExtendedPager pagerCellTable2 = new ExtendedPager();
 		pagerCellTable2.setPageSize(15);
 		pagerCellTable2.setDisplay(cellTable2);
@@ -1234,14 +1261,10 @@ public class AirportLH implements EntryPoint {
 		};
 		cellTable3.addColumn(columnSeats1, "Места");
 
-		// provider3 = new ListDataProviderExtension3();
-		provider3 = ListDataProviderExtension3.getInstance();
-
 		// add provider to cellTable
+		provider3 = ListDataProviderExtension3.getInstance();
 		provider3.addDataDisplay(cellTable3);
 
-		// SimplePager pagerCellTable3 = new SimplePager(TextLocation.CENTER,
-		// true, true);
 		ExtendedPager pagerCellTable3 = new ExtendedPager();
 		pagerCellTable3.setPageSize(8);
 		pagerCellTable3.setDisplay(cellTable3);
@@ -1346,8 +1369,6 @@ public class AirportLH implements EntryPoint {
 		// add provider to cellTable4
 		provider4.addDataDisplay(cellTable4);
 
-		// SimplePager pagerCellTable4 = new SimplePager(TextLocation.CENTER,
-		// true, true);
 		ExtendedPager pagerCellTable4 = new ExtendedPager();
 		pagerCellTable4.setPageSize(8);
 		pagerCellTable4.setDisplay(cellTable4);
@@ -1367,11 +1388,11 @@ public class AirportLH implements EntryPoint {
 		verticalPanel5.add(labelInfo);
 
 		messageTextBox5 = new TextBox();
-		verticalPanel5.add(messageTextBox5);
 		messageTextBox5.setText(
 				"Изменение состава летных бригад заблокировано. Нажмите кнопку с номером бригады для разблокирования.");
 		messageTextBox5.setWidth("700px");
 		messageTextBox5.setEnabled(false);
+		verticalPanel5.add(messageTextBox5);
 
 		// Create a CellTable.
 		final CellTable<Timetable> cellTable5 = new CellTable<Timetable>();
@@ -1482,10 +1503,10 @@ public class AirportLH implements EntryPoint {
 		deleteButton6.setFieldUpdater(new FieldUpdaterImplementationDeleteFlight());
 
 		// provider5 = new ListDataProviderExtension5();
-		provider5 = ListDataProviderExtension5.getInstance();
+		provider5A = ListDataProviderExtension5A.getInstance();
 
 		// add provider to cellTable
-		provider5.addDataDisplay(cellTable5);
+		provider5A.addDataDisplay(cellTable5);
 
 		// SimplePager pagerCellTable5 = new SimplePager(TextLocation.CENTER,
 		// true, true);
@@ -1494,16 +1515,16 @@ public class AirportLH implements EntryPoint {
 
 		// Button Все назначенные рейсы handler
 		// ClickHandlerImplementation
-		Button buttonAllFlights = new Button("Все назначенные рейсы");
-		buttonAllFlights.addClickHandler(new ClickHandlerImplementationAllActiveFlights(cellTable5));
+//		Button buttonAllFlights = new Button("Все назначенные рейсы");
+//		buttonAllFlights.addClickHandler(new ClickHandlerImplementationAllActiveFlights(cellTable5));
 
 		// Button Все рейсы handler
 		// ClickHandlerImplementation
 		Button buttonAllSuspendedFlights = new Button("Все рейсы");
 		buttonAllSuspendedFlights.addClickHandler(new ClickHandlerImplementationAllSuspendedFlights(cellTable5));
 
-		buttonAllFlights.setText("Все назначенные рейсы");
-		verticalPanel5.add(buttonAllFlights);
+//		buttonAllFlights.setText("Все назначенные рейсы");
+//		verticalPanel5.add(buttonAllFlights);
 
 		buttonAllSuspendedFlights.setText("Все рейсы");
 		verticalPanel5.add(buttonAllSuspendedFlights);
@@ -1520,11 +1541,11 @@ public class AirportLH implements EntryPoint {
 		verticalPanel6.setSpacing(5);
 
 		messageTextBox6 = new TextBox();
-		verticalPanel6.add(messageTextBox5);
 		messageTextBox6.setText(
-				"Изменение состава летных бригад заблокировано. Нажмите кнопку с должностью для разблокирования.");
+				"Изменение выбранной летной бригады заблокировано. Нажмите кнопку с должностью для разблокирования.");
 		messageTextBox6.setWidth("700px");
 		messageTextBox6.setEnabled(false);
+		verticalPanel6.add(messageTextBox6);
 
 		cellTable6 = new CellTable<Staff>();
 		// Display 15 rows in one page
@@ -1573,6 +1594,11 @@ public class AirportLH implements EntryPoint {
 		};
 		cellTable6.addColumn(updateButton6, "Изменить состав летной бригады");
 
+		// add mock provider to cell table
+		provider6 = ListDataProviderExtension6.getInstance(1);
+		provider6.addDataDisplay(cellTable6);
+		
+	
 		buttonDeleteCrew = new Button("Delete crew");
 		buttonDeleteCrew.setText("Удалить летную бригаду");
 		buttonDeleteCrew.addClickHandler(new ClickHandlerImplementationDeleteCrew());
@@ -1635,9 +1661,14 @@ public class AirportLH implements EntryPoint {
 		};
 		cellTable7.addColumn(updateButton7, "Изменить состав летной бригады");
 
-		ExtendedPager pagerCellTable7 = new ExtendedPager();
-		pagerCellTable7.setDisplay(cellTable7);
+		// add mock provider to cellTable
+		provider7 = ListDataProviderExtension7.getInstance("Flight Attendant");
+		provider7.addDataDisplay(cellTable7);
 		
+		pagerCellTable7 = new ExtendedPager();
+		pagerCellTable7.setPageSize(15);
+		pagerCellTable7.setDisplay(cellTable7);
+			
 		// Update staff in selected crew
 		// FieldUpdaterImplementation
 		updateButton7.setFieldUpdater(new FieldUpdaterImplementationUpdateCrewStaff());
@@ -1689,13 +1720,10 @@ public class AirportLH implements EntryPoint {
 		};
 		cellTable8.addColumn(columnIcaoAddr8, "Адрес ICAO");
 
-		provider8 = ListDataProviderExtension8.getInstance();
-
 		// add provider to cellTable
+		provider8 = ListDataProviderExtension8.getInstance();
 		provider8.addDataDisplay(cellTable8);
 
-		// SimplePager pagerCellTable8 = new SimplePager(TextLocation.CENTER,
-		// false, false);
 		ExtendedPager pagerCellTable8 = new ExtendedPager();
 		pagerCellTable8.setDisplay(cellTable8);
 

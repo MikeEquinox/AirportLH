@@ -5,10 +5,9 @@ import com.google.gwt.view.client.Range;
 
 /**
  * A custom Pager that maintains a set page size and displays page numbers and
- * total pages more elegantly. SimplePager will ensure <code>pageSize</ 
-code> 
+ * total pages more elegantly. SimplePager will ensure pageSize
  * rows are always rendered even if the "last" page has less than 
- * <code>pageSize</code> rows remain.
+ * pageSize rows remain.
  */
 public class ExtendedPager extends SimplePager {
 

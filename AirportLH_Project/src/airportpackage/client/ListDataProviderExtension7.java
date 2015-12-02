@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.ListDataProvider;
 
@@ -20,7 +21,7 @@ final class ListDataProviderExtension7 extends ListDataProvider<Staff> {
 	
 	private static ListDataProviderExtension7 instance;
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
-	final Logger clientLogger = Logger.getLogger("clientLogger");
+	final static Logger clientLogger = Logger.getLogger("clientLogger");
 	private int end;
 	static String forwardStaffPosition7;
 	
@@ -31,17 +32,19 @@ final class ListDataProviderExtension7 extends ListDataProvider<Staff> {
 	
 		instance = new ListDataProviderExtension7();
 		forwardStaffPosition7 = forwardStaffPosition;
-
+		clientLogger.log(Level.INFO, "ListDataProvider7: new instance");
 		return instance;
+		
 	}
 	@Override
 	protected void onRangeChanged(HasData<Staff> display) {
 
-		clientLogger.log(Level.INFO, "ListDataProvider7: " + forwardStaffPosition7);
+		clientLogger.log(Level.INFO, "ListDataProvider7: " + forwardStaffPosition7 + " data changed");
 		final int start = display.getVisibleRange().getStart();
 		end = start + display.getVisibleRange().getLength();
 
-		greetingService.getStaffByPosition("" + forwardStaffPosition7, new AsyncCallback<List<Staff>>() {
+		String str = "" + forwardStaffPosition7;
+		greetingService.getStaffByPosition(str, new AsyncCallback<List<Staff>>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				clientLogger.log(Level.SEVERE,
@@ -57,7 +60,7 @@ final class ListDataProviderExtension7 extends ListDataProvider<Staff> {
 				updateRowData(start, sub);
 				clientLogger.log(Level.INFO,
 						"ListDataProviderExtension7 shows Staff in selected Crew on monitor screen");
-				clientLogger.log(Level.INFO, "greetingService.getStaffByPosition, AsyncCallback succeded.");
+				clientLogger.log(Level.INFO, "greetingService.getStaffByPosition(), AsyncCallback succeded.");
 
 			}
 		});

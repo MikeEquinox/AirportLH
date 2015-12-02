@@ -121,6 +121,13 @@ public interface TimetableMapper {
 	void updateTimetableByFlightNumber(Timetable timetable);
 
 	/**
+	 * Update flight dates into table TIMETABLE, database AIRPORT
+	 * @param timetable - object Timetable
+	 */
+	@Update("UPDATE TIMETABLE SET CREW_ID=#{crewId} WHERE FLIGHT_NUMBER =#{flightNumber}")
+	void updateTimetableDates(Timetable timetable);
+	
+	/**
 	 * Delete flight by flightNumber from table TIMETABLE, database AIRPORT 
 	 * @param flightNumber - flight number
 	 */

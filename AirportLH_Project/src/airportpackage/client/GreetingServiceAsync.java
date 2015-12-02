@@ -143,7 +143,7 @@ public interface GreetingServiceAsync {
 
 	/**
 	 * Delete crew by crewId from table CREW, database AIRPORT
-	 * @param forwardCrewId - crewId
+	 * @param crewId - crewId
 	 * @param asyncCallback - handler to handle RPC callback in which server returns the Message back to client
 	 */
 	void deleteCrewById(int crewId, AsyncCallback<String> asyncCallback);

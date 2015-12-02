@@ -145,7 +145,8 @@ public interface GreetingService extends RemoteService {
 
 	/**
 	 * Delete crew by crewId from table CREW, database AIRPORT
-	 * @param forwardCrewId - crewId
+	 * @param crewId - crewId
+	 * @return ""
 	 */
 	String deleteCrewById(int crewId);
 

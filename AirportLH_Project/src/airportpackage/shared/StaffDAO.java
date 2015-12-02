@@ -30,6 +30,7 @@ public class StaffDAO {
 	 * Create DAO logger
 	 */
 	Logger daoLogger = Logger.getLogger("daoLogger");
+	private List<Staff> staffList;
 
 		
 		/**
@@ -66,11 +67,14 @@ public class StaffDAO {
 		 * @return Staff list
 		 */
 		public List<Staff> getStaffByPosition(String position) {
-			SqlSession session = getSqlSessionFactory().openSession();	
+			SqlSession session = getSqlSessionFactory().openSession();
+			try { 	
 			daoLogger.log(Level.INFO, "StaffDAO calls for StaffMapper, getStaffByPosition(String position)");
 			StaffMapper mapper = session.getMapper(StaffMapper.class);
-			List<Staff> staffList = mapper.getStaffByPosition(position);
+			staffList = mapper.getStaffByPosition(position);
+			} finally {
 			session.close();
+			}
 			return staffList;
 		}
 		
